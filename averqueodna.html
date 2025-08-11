@@ -33,6 +33,7 @@
   .dot.pulmonic{background:#22c55e}
   .dot.tricuspid{background:#eab308}
   .dot.mitral{background:#3b82f6}
+  .dot.erb{background:#a855f7}
 
   /* Diagram */
   .diagram{padding:12px}
@@ -80,56 +81,55 @@
         <span class="badge"><span class="dot pulmonic"></span>Pulmonic – L 2nd ICS</span>
         <span class="badge"><span class="dot tricuspid"></span>Tricuspid – LLSB (4th–5th ICS)</span>
         <span class="badge"><span class="dot mitral"></span>Mitral (Apex) – L 5th ICS MCL</span>
+        <span class="badge"><span class="dot erb"></span>Erb’s point – L 3rd ICS (LSB)</span>
       </div>
     </div>
     <div class="diagram">
       <!-- Simple torso silhouette (SVG) with pins -->
       <svg class="stage" viewBox="0 0 300 420" aria-label="Auscultation diagram">
-        <!-- Torso silhouette -->
         <defs>
           <linearGradient id="skin" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0%" stop-color="#f3e8e2"/>
             <stop offset="100%" stop-color="#e7d7cf"/>
           </linearGradient>
         </defs>
-        <path d="M150 10
-                 C 120 20, 70 40, 60 90
-                 L 60 320
-                 C 80 360, 120 390, 150 400
-                 C 180 390, 220 360, 240 320
-                 L 240 90
-                 C 230 40, 180 20, 150 10 Z"
-              fill="url(#skin)" stroke="#c8b8b0" stroke-width="2"/>
-        <!-- Sternum line -->
+        <image href="ribcage.png" x="0" y="0" width="300" height="420" preserveAspectRatio="xMidYMid meet" opacity="0.9"/>
+        <path d="M150 10 C 120 20, 70 40, 60 90 L 60 320 C 80 360, 120 390, 150 400 C 180 390, 220 360, 240 320 L 240 90 C 230 40, 180 20, 150 10 Z" fill="none" stroke="#c8b8b0" stroke-width="2"/>
         <line x1="150" y1="70" x2="150" y2="330" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 6"/>
 
-        <!-- Pins (approximate anatomical placement) -->
-        <!-- Aortic: Right 2nd ICS (parasternal) -->
+        <!-- Aortic: Right 2nd ICS (parasternal) – patient right (viewer left) -->
         <g class="pin" data-site="aortic" tabindex="0" role="button" aria-label="Aortic area (Right 2nd intercostal space)">
-          <circle cx="170" cy="120" r="9" fill="#ef4444"/>
-          <circle class="ring" cx="170" cy="120" r="15"/>
-          <text x="185" y="125" fill="#111">A</text>
+          <circle cx="135" cy="115" r="9" fill="#ef4444"/>
+          <circle class="ring" cx="135" cy="115" r="15"/>
+          <text x="135" y="115" text-anchor="middle" dy=".35em" fill="#111">A</text>
         </g>
 
-        <!-- Pulmonic: Left 2nd ICS (parasternal) -->
+        <!-- Pulmonic: Left 2nd ICS (parasternal) – patient left (viewer right) -->
         <g class="pin" data-site="pulmonic" tabindex="0" role="button" aria-label="Pulmonic area (Left 2nd intercostal space)">
-          <circle cx="130" cy="120" r="9" fill="#22c55e"/>
-          <circle class="ring" cx="130" cy="120" r="15"/>
-          <text x="92" y="125" fill="#111">P</text>
+          <circle cx="165" cy="115" r="9" fill="#22c55e"/>
+          <circle class="ring" cx="165" cy="115" r="15"/>
+          <text x="165" y="115" text-anchor="middle" dy=".35em" fill="#111">P</text>
+        </g>
+
+        <!-- Erb’s point: Left 3rd ICS (LSB) -->
+        <g class="pin" data-site="erb" tabindex="0" role="button" aria-label="Erb’s point (Left 3rd intercostal space)">
+          <circle cx="160" cy="150" r="9" fill="#a855f7"/>
+          <circle class="ring" cx="160" cy="150" r="15"/>
+          <text x="160" y="150" text-anchor="middle" dy=".35em" fill="#111">E</text>
         </g>
 
         <!-- Tricuspid: LLSB 4–5th -->
         <g class="pin" data-site="tricuspid" tabindex="0" role="button" aria-label="Tricuspid area (Left lower sternal border)">
-          <circle cx="140" cy="200" r="9" fill="#eab308"/>
-          <circle class="ring" cx="140" cy="200" r="15"/>
-          <text x="70" y="205" fill="#111">T</text>
+          <circle cx="155" cy="190" r="9" fill="#eab308"/>
+          <circle class="ring" cx="155" cy="190" r="15"/>
+          <text x="155" y="190" text-anchor="middle" dy=".35em" fill="#111">T</text>
         </g>
 
         <!-- Mitral (Apex): Left 5th ICS MCL -->
         <g class="pin" data-site="mitral" tabindex="0" role="button" aria-label="Mitral area (Apex)">
-          <circle cx="180" cy="240" r="9" fill="#3b82f6"/>
-          <circle class="ring" cx="180" cy="240" r="15"/>
-          <text x="195" y="245" fill="#111">M</text>
+          <circle cx="205" cy="250" r="9" fill="#3b82f6"/>
+          <circle class="ring" cx="205" cy="250" r="15"/>
+          <text x="205" y="250" text-anchor="middle" dy=".35em" fill="#111">M</text>
         </g>
       </svg>
       <div class="pad">
@@ -163,7 +163,7 @@
       </table>
 
       <div class="callout" style="margin-top:12px">
-        <strong>NBME reminders:</strong> Holosystolic at apex → think **MR** (to axilla). Harsh crescendo-decrescendo at R 2nd ICS → **AS** (to carotids). Early diastolic decrescendo along LSB → **AR**. Fixed split S2 at L 2nd ICS → **ASD** (flow murmur).
+        <strong>NBME reminders:</strong> Holosystolic at apex → think <b>MR</b> (to axilla). Harsh crescendo-decrescendo at R 2nd ICS → <b>AS</b> (to carotids). Early diastolic decrescendo at <b>Erb’s (L 3rd ICS)</b> or along LSB → <b>AR</b>. Fixed split S2 at L 2nd ICS → <b>ASD</b> (flow murmur).
       </div>
     </div>
   </div>
@@ -218,6 +218,14 @@ const DATA = {
         maneuvers: "↑ with inspiration.",
         radiation: "LUSB."
       }
+    ]
+  },
+  erb: {
+    label: "Erb’s point – Left 3rd ICS (left sternal border)",
+    rows: [
+      { phase: "Systole", condition: "<b>HCM</b> – harsh crescendo–decrescendo at LSB; louder with ↓ preload.", maneuvers: "↑ Valsalva/stand; ↓ squat/leg raise; handgrip: ↓.", radiation: "LLSB." },
+      { phase: "Diastole", condition: "<b>Aortic regurgitation</b> – high‑pitched early diastolic decrescendo; best at L 3rd ICS with patient leaning forward, end‑expiration.", maneuvers: "↑ with handgrip; ↑ leaning forward, end‑expiration.", radiation: "Left sternal border." },
+      { phase: "S2", condition: "Accentuated A2/P2 and S2 splitting are often appreciated here.", maneuvers: "Physiologic split widens with inspiration.", radiation: "Base/LSB." }
     ]
   },
   tricuspid: {
@@ -345,7 +353,7 @@ resetView();
 
   try{
     // 1) Data presence
-    const keys = ["aortic","pulmonic","tricuspid","mitral"];
+    const keys = ["aortic","pulmonic","tricuspid","mitral","erb"];
     if(keys.some(k => !DATA[k] || !Array.isArray(DATA[k].rows) || DATA[k].rows.length===0)){
       err("Data missing for at least one site"); return;
     } else { log("All sites contain rows"); }
