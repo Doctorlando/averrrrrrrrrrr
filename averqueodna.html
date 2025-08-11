@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>USMLE Step 2 – Heart Auscultation Sites (Interactive, Offline)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --card:#ffffff;
+    --ink:#0f172a;
+    --muted:#64748b;
+    --primary:#2563eb;
+    --primary-weak:#dbeafe;
+    --accent:#0ea5e9;
+    --good:#16a34a;
+    --bad:#dc2626;
+    --border:#e5e7eb;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+  header{padding:20px 16px}
+  h1{margin:0;font-size:1.6rem;line-height:1.1}
+  .sub{color:var(--muted);margin-top:6px}
+  .wrap{display:grid;grid-template-columns: 380px 1fr;gap:16px;align-items:start;padding:0 16px 24px;max-width:1200px;margin:0 auto}
+  @media (max-width: 940px){ .wrap{grid-template-columns:1fr} }
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+  .card h2{font-size:1rem;margin:0 0 8px;color:#0b1220}
+  .pad{padding:14px}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .badge{padding:.25rem .5rem;border-radius:999px;border:1px solid var(--border);background:#fff;font-size:.8rem}
+  .badge .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  .dot.aortic{background:#ef4444}
+  .dot.pulmonic{background:#22c55e}
+  .dot.tricuspid{background:#eab308}
+  .dot.mitral{background:#3b82f6}
+
+  /* Diagram */
+  .diagram{padding:12px}
+  .diagram .stage{position:relative;display:block;margin:auto;max-width:360px}
+  .pin{cursor:pointer;stroke:#111;stroke-width:1.5}
+  .pin circle{filter: drop-shadow(0 1px 1px rgba(0,0,0,.25))}
+  .pin text{font-size:12px;font-weight:600;pointer-events:none}
+  .pin .ring{fill:none;stroke-width:3;stroke:transparent}
+  .pin.active .ring{stroke:var(--accent)}
+  .note{font-size:.85rem;color:var(--muted);margin-top:8px}
+
+  /* Table */
+  table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+  thead th{background:var(--primary-weak);text-align:left;font-weight:700;padding:10px 12px;border-bottom:1px solid var(--border);font-size:.92rem}
+  tbody td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  tbody tr:last-child td{border-bottom:none}
+  .phase{font-weight:700}
+  .chip{display:inline-block;padding:2px 8px;border-radius:999px;background:#eef2ff;border:1px solid #dbeafe;font-size:.75rem;margin-right:6px;margin-bottom:4px}
+  .hint{color:var(--muted);font-size:.9rem}
+  .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size:.85rem}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  .button{appearance:none;border:1px solid var(--border);background:#fff;border-radius:10px;padding:8px 12px;cursor:pointer}
+  .button:hover{border-color:#c7cdd8}
+  .button.primary{background:var(--primary);color:white;border-color:var(--primary)}
+  .pill{border-radius:999px;padding:6px 10px;border:1px solid var(--border);background:#fff}
+  .inline{display:inline-block;margin-left:6px}
+  .callout{background:#fff; border:1px dashed var(--border);border-radius:10px;padding:10px 12px; color:var(--muted);font-size:.92rem}
+  .green{color:var(--good)} .red{color:var(--bad)}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Heart Auscultation Sites – USMLE Step 2 (Interactive)</h1>
+  <div class="sub">Click a site on the chest diagram to load its **systolic/diastolic** high-yield findings. Works offline. No audio.</div>
+</header>
+
+<div class="wrap">
+  <!-- Left: Diagram -->
+  <div class="card">
+    <div class="pad">
+      <h2>Chest Diagram</h2>
+      <div class="legend">
+        <span class="badge"><span class="dot aortic"></span>Aortic – R 2nd ICS</span>
+        <span class="badge"><span class="dot pulmonic"></span>Pulmonic – L 2nd ICS</span>
+        <span class="badge"><span class="dot tricuspid"></span>Tricuspid – LLSB (4th–5th ICS)</span>
+        <span class="badge"><span class="dot mitral"></span>Mitral (Apex) – L 5th ICS MCL</span>
+      </div>
+    </div>
+    <div class="diagram">
+      <!-- Simple torso silhouette (SVG) with pins -->
+      <svg class="stage" viewBox="0 0 300 420" aria-label="Auscultation diagram">
+        <!-- Torso silhouette -->
+        <defs>
+          <linearGradient id="skin" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#f3e8e2"/>
+            <stop offset="100%" stop-color="#e7d7cf"/>
+          </linearGradient>
+        </defs>
+        <path d="M150 10
+                 C 120 20, 70 40, 60 90
+                 L 60 320
+                 C 80 360, 120 390, 150 400
+                 C 180 390, 220 360, 240 320
+                 L 240 90
+                 C 230 40, 180 20, 150 10 Z"
+              fill="url(#skin)" stroke="#c8b8b0" stroke-width="2"/>
+        <!-- Sternum line -->
+        <line x1="150" y1="70" x2="150" y2="330" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 6"/>
+
+        <!-- Pins (approximate anatomical placement) -->
+        <!-- Aortic: Right 2nd ICS (parasternal) -->
+        <g class="pin" data-site="aortic" tabindex="0" role="button" aria-label="Aortic area (Right 2nd intercostal space)">
+          <circle cx="170" cy="120" r="9" fill="#ef4444"/>
+          <circle class="ring" cx="170" cy="120" r="15"/>
+          <text x="185" y="125" fill="#111">A</text>
+        </g>
+
+        <!-- Pulmonic: Left 2nd ICS (parasternal) -->
+        <g class="pin" data-site="pulmonic" tabindex="0" role="button" aria-label="Pulmonic area (Left 2nd intercostal space)">
+          <circle cx="130" cy="120" r="9" fill="#22c55e"/>
+          <circle class="ring" cx="130" cy="120" r="15"/>
+          <text x="92" y="125" fill="#111">P</text>
+        </g>
+
+        <!-- Tricuspid: LLSB 4–5th -->
+        <g class="pin" data-site="tricuspid" tabindex="0" role="button" aria-label="Tricuspid area (Left lower sternal border)">
+          <circle cx="140" cy="200" r="9" fill="#eab308"/>
+          <circle class="ring" cx="140" cy="200" r="15"/>
+          <text x="70" y="205" fill="#111">T</text>
+        </g>
+
+        <!-- Mitral (Apex): Left 5th ICS MCL -->
+        <g class="pin" data-site="mitral" tabindex="0" role="button" aria-label="Mitral area (Apex)">
+          <circle cx="180" cy="240" r="9" fill="#3b82f6"/>
+          <circle class="ring" cx="180" cy="240" r="15"/>
+          <text x="195" y="245" fill="#111">M</text>
+        </g>
+      </svg>
+      <div class="pad">
+        <div class="note">
+          Tip: Use **maneuvers** to differentiate murmurs: <span class="mono">inspiration</span> (↑ right-sided), <span class="mono">handgrip</span> (↑ afterload), <span class="mono">Valsalva/stand</span> (↓ preload), <span class="mono">squat</span> (↑ preload/afterload).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: Details / Table -->
+  <div class="card">
+    <div class="pad">
+      <div class="toolbar">
+        <button class="button primary" id="resetBtn">Reset</button>
+        <div class="pill">Selected site: <span class="inline" id="siteName">—</span></div>
+      </div>
+
+      <table aria-label="High-yield auscultation findings">
+        <thead>
+          <tr>
+            <th style="width:110px;">Phase</th>
+            <th>Condition (high-yield features)</th>
+            <th style="width:170px;">Maneuvers (↑/↓)</th>
+            <th style="width:150px;">Radiation / Best heard</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <!-- rows injected here -->
+        </tbody>
+      </table>
+
+      <div class="callout" style="margin-top:12px">
+        <strong>NBME reminders:</strong> Holosystolic at apex → think **MR** (to axilla). Harsh crescendo-decrescendo at R 2nd ICS → **AS** (to carotids). Early diastolic decrescendo along LSB → **AR**. Fixed split S2 at L 2nd ICS → **ASD** (flow murmur).
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===============================
+   Data: High-yield by auscultation site
+   =============================== */
+const DATA = {
+  aortic: {
+    label: "Aortic – Right 2nd ICS (parasternal)",
+    rows: [
+      {
+        phase: "Systole",
+        condition: "<b>Aortic stenosis</b> – harsh crescendo-decrescendo; often with soft/absent A2; paradoxical split possible.",
+        maneuvers: "↑ with squat/leg raise; ↓ with Valsalva/stand; handgrip: ↔/↓.",
+        radiation: "To <b>carotids</b>; best at R 2nd ICS."
+      },
+      {
+        phase: "Systole",
+        condition: "Flow murmur (↑ output states).",
+        maneuvers: "↑ with ↑ preload.",
+        radiation: "Base."
+      },
+      {
+        phase: "Diastole",
+        condition: "<b>Aortic regurgitation</b> – early diastolic decrescendo; bounding pulses & wide PP; Austin-Flint rumble at apex.",
+        maneuvers: "↑ with handgrip; ↑ leaning forward, end-expiration.",
+        radiation: "Left sternal border (if non-valvular) or RSB (valvular)."
+      }
+    ]
+  },
+  pulmonic: {
+    label: "Pulmonic – Left 2nd ICS (parasternal)",
+    rows: [
+      {
+        phase: "Systole",
+        condition: "<b>Pulmonic stenosis</b> – harsh ejection murmur; ejection click may precede.",
+        maneuvers: "↑ with inspiration; ↑ with squat.",
+        radiation: "Neck (less than AS); L 2nd ICS."
+      },
+      {
+        phase: "Systole",
+        condition: "↑ flow across PV (e.g., <b>ASD</b>) → systolic ejection murmur + <b>fixed split S2</b>.",
+        maneuvers: "Minimal respiratory variation of split.",
+        radiation: "LUSB (left upper sternal border)."
+      },
+      {
+        phase: "Diastole",
+        condition: "<b>Pulmonic regurgitation</b> (Graham Steell) – high-pitched early diastolic decrescendo.",
+        maneuvers: "↑ with inspiration.",
+        radiation: "LUSB."
+      }
+    ]
+  },
+  tricuspid: {
+    label: "Tricuspid – Left lower sternal border (4th–5th ICS)",
+    rows: [
+      {
+        phase: "Systole",
+        condition: "<b>Tricuspid regurgitation</b> – holosystolic blowing; ↑ with inspiration (Carvallo sign).",
+        maneuvers: "↑ inspiration; handgrip: ↑ if afterload ↑; Valsalva/stand: ↓.",
+        radiation: "To right lower sternal border."
+      },
+      {
+        phase: "Systole",
+        condition: "<b>VSD</b> – harsh holosystolic at LLSB.",
+        maneuvers: "↑ with handgrip (↑ afterload → L→R shunt ↓ but murmur often ↑ due to higher LV pressure against defect).",
+        radiation: "LLSB."
+      },
+      {
+        phase: "Systole",
+        condition: "<b>HCM</b> – harsh crescendo-decrescendo at LSB; louder with ↓ preload.",
+        maneuvers: "↑ Valsalva/stand; ↓ squat/leg raise; handgrip: ↓.",
+        radiation: "LLSB/apex."
+      },
+      {
+        phase: "Diastole",
+        condition: "<b>Tricuspid stenosis</b> – diastolic rumble with opening snap; ↑ with inspiration.",
+        maneuvers: "↑ inspiration.",
+        radiation: "LLSB."
+      }
+    ]
+  },
+  mitral: {
+    label: "Mitral (Apex) – Left 5th ICS mid-clavicular line",
+    rows: [
+      {
+        phase: "Systole",
+        condition: "<b>Mitral regurgitation</b> – holosystolic blowing; displaced, hyperdynamic apex.",
+        maneuvers: "↑ handgrip; ↓ Valsalva/stand; ↑ squat/leg raise.",
+        radiation: "To <b>axilla</b>."
+      },
+      {
+        phase: "Systole",
+        condition: "<b>MVP</b> – mid-systolic click + late systolic murmur; click earlier with ↓ preload.",
+        maneuvers: "↑ Valsalva/stand (earlier/longer); ↓ squat.",
+        radiation: "Apex."
+      },
+      {
+        phase: "Diastole",
+        condition: "<b>Mitral stenosis</b> – opening snap + diastolic rumble; loud S1; symptoms of LA enlargement.",
+        maneuvers: "↑ left lateral decubitus; mild ↑ with handgrip.",
+        radiation: "Apex (bell)."
+      },
+      {
+        phase: "Diastole",
+        condition: "S3/S4 (best at apex, LLD) – think <b>volume overload</b> (S3) or <b>stiff ventricle</b> (S4).",
+        maneuvers: "↑ with ↑ preload; S4 disappears in AF.",
+        radiation: "Apex."
+      }
+    ]
+  }
+};
+
+/* ===============================
+   Rendering / Interaction
+   =============================== */
+const tbody = document.getElementById('tbody');
+const siteNameEl = document.getElementById('siteName');
+const pins = Array.from(document.querySelectorAll('.pin'));
+const resetBtn = document.getElementById('resetBtn');
+
+function renderSite(key){
+  const site = DATA[key];
+  if(!site) return;
+  // highlight
+  pins.forEach(p => p.classList.toggle('active', p.dataset.site === key));
+  siteNameEl.textContent = site.label;
+  tbody.innerHTML = "";
+  site.rows.forEach(row => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="phase">${row.phase}</td>
+      <td>${row.condition}</td>
+      <td><span class="hint">${row.maneuvers}</span></td>
+      <td>${row.radiation}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function resetView(){
+  pins.forEach(p => p.classList.remove('active'));
+  siteNameEl.textContent = "—";
+  tbody.innerHTML = `
+    <tr><td colspan="4">
+      <div class="hint">Select a site on the diagram to populate the table.</div>
+      <div style="margin-top:8px">
+        <span class="chip"><b>Systole</b> = AS (R2), PS (L2), MR/MVP (Apex), TR/VSD/HCM (LLSB)</span>
+        <span class="chip"><b>Diastole</b> = AR (LSB/base), PR (L2), MS (Apex), TS (LLSB)</span>
+      </div>
+    </td></tr>`;
+}
+
+// click & keyboard activation
+pins.forEach(p => {
+  p.addEventListener('click', () => renderSite(p.dataset.site));
+  p.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      renderSite(p.dataset.site);
+    }
+  });
+});
+resetBtn.addEventListener('click', resetView);
+
+// Initialize
+resetView();
+
+/* ===============================
+   Lightweight "Test Cases"
+   (Open DevTools Console to see results)
+   =============================== */
+(function runSmokeTests(){
+  const log = (...args)=>console.log("%c[Test]","color:#2563eb;font-weight:bold",...args);
+  const err = (...args)=>console.error("%c[Test]","color:#dc2626;font-weight:bold",...args);
+
+  try{
+    // 1) Data presence
+    const keys = ["aortic","pulmonic","tricuspid","mitral"];
+    if(keys.some(k => !DATA[k] || !Array.isArray(DATA[k].rows) || DATA[k].rows.length===0)){
+      err("Data missing for at least one site"); return;
+    } else { log("All sites contain rows"); }
+
+    // 2) Render each site and ensure rows populate
+    keys.forEach(k => {
+      renderSite(k);
+      const count = tbody.querySelectorAll("tr").length;
+      if(count === 0){ throw new Error(`No rows rendered for ${k}`); }
+      log(`Rendered ${k}: ${count} row(s)`);
+    });
+
+    // 3) Reset returns to placeholder row
+    resetView();
+    const placeholder = tbody.querySelectorAll("tr").length === 1;
+    if(!placeholder){ throw new Error("Reset did not show placeholder row"); }
+    log("Reset shows placeholder row");
+
+    // 4) Accessibility: pins are focusable
+    const allFocusable = pins.every(p => p.getAttribute('tabindex') === "0");
+    if(!allFocusable){ throw new Error("Pins not keyboard focusable"); }
+    log("Pins are keyboard focusable (tabindex=0)");
+
+    log("%cAll smoke tests passed ✅","color:#16a34a;font-weight:bold");
+  } catch(e){
+    err("Smoke tests failed:", e.message);
+  }
+})();
+</script>
+</body>
+</html>
